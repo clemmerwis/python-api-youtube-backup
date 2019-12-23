@@ -65,6 +65,17 @@ def create_Playlists_directory_if_needed(playlists_titles_dict):
     if not os.path.exists(dir_path):
       os.mkdir(dir_path)
 
+# Check for page token
+def get_all_pages(token, api_playlistitems_url, playlist_items):
+  while token != '':
+    token_in_url = f"&pageToken={token}"
+    next_api_playlistsitems_url = api_playlistitems_url + token_in_url
+    next_playlists_items_data = get_data_dict(next_api_playlistsitems_url)
+    new_playlist_items = create_playlists_items_dict(next_playlists_items_data)
+    playlist_items.update(new_playlist_items)
+    token = check_playlist_pagetoken(next_playlists_items_data)
+  return playlist_items
+
 def get_max_row(active_sheet):
   maxRow = None
   counter = 2 #start on row after header
@@ -133,24 +144,18 @@ create_Playlists_directory_if_needed(playlists_titles)
 straight_talk_id = 'PLS2zYUkKepApRcUKYZfjkK8osX1d80OCj'
 constitution_corner = 'PLS2zYUkKepApRgl-ftmCeafG-A-gSZg4Z'
 
-# after getting dict made, check for page token, and remake url and scrape again if needed
 # def backup_playlist(playlist_id):
-  # make api_url
-api_key = 'AIzaSyBAdbm6MkWm_2HbDfXnbRWmbKYTRPmOHfY'
-api_playlistitems_url = create_playlistitems_url(straight_talk_id, api_key)
 
+api_playlistitems_url = create_playlistitems_url(straight_talk_id, api_key)
 # get videos
 playlist_items_data = get_data_dict(api_playlistitems_url)
 playlist_items = create_playlists_items_dict(playlist_items_data)
-# Check for page token
 token = check_playlist_pagetoken(playlist_items_data)
-while token != '':
-  token_in_url = f"&pageToken={token}"
-  next_api_playlistsitems_url = api_playlistitems_url + token_in_url
-  next_playlists_items_data = get_data_dict(next_api_playlistsitems_url)
-  new_playlist_items = create_playlists_items_dict(next_playlists_items_data)
-  playlist_items.update(new_playlist_items)
-  token = check_playlist_pagetoken(next_playlists_items_data)
+playlist_items = get_all_pages(token, api_playlistitems_url, playlist_items)
+
+
+
+print( "Number of videos in playlist: " + str(len(playlist_items)) )
 # backup_playlist(straight_talk_id)
 
 f.close()
