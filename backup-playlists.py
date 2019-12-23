@@ -95,7 +95,7 @@ def list_playlists_ids(playlists_dict):
 # ------
 secrets = 'client_secret.json'
 channel_id = 'UCD_PvRz7fvX9WOBL6T4P45Q'
-api_key = 'AIzaSyBAdbm6MkWm_2HbDfXnbRWmbKYTRPmOHfY'
+api_key = 'yourapikey'
 # api_single_playlist_url = f"https://www.googleapis.com/youtube/v3/playlists?part=snippet&id={cc_playlist_id}&key={api_key}"
 
 data_folder = Path("C:/Users/clemmer/myComp/code/python/JBS Playlists")
