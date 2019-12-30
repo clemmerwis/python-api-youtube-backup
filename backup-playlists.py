@@ -201,8 +201,8 @@ def get_page_token(data, looper):
   return token, looper
 
 # vars
-channel_id = 'UCD_PvRz7fvX9WOBL6T4P45Q'
-api_key = 'AIzaSyBAdbm6MkWm_2HbDfXnbRWmbKYTRPmOHfY'
+channel_id = 'your_channel_id'
+api_key = 'your_api_key'
 # playlist_to_backup = sys.argv[1]
 playlist_to_backup = 'JBS Straight Talk'
 looper = 0
